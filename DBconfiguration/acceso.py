@@ -60,7 +60,15 @@ def obtener_datos_usuario(username, password):
 if __name__ == "__main__":
     print("Inicio de sesión en la base de datos")
     # Solicitar credenciales al usuario
-    user = input("Ingrese su usuario: ")
-    pwd = getpass.getpass("Ingrese su contraseña: ")#No muestra la contraseña a escribir
+   ##### user = input("Ingrese su usuario: ")
+   ##### pwd = getpass.getpass("Ingrese su contraseña: ")#No muestra la contraseña a escribir
     #Consultar base de datos
-    obtener_datos_usuario(user, pwd)
+   ##### obtener_datos_usuario(user, pwd)
+   print("Insertar datos")
+   nombreNUevo = input("Ingresa el nombre del nuevo usuario")
+   correo = input("Ingresa el correo")
+   telefono = input("Ingresa el telefono")
+   fecha_nacimiento = input("Ingresa la fecha de nacimiento")
+   usuario = input("Ingresa nombre del usuario nuevo")
+   contra = input("Ingresa contraseña nueva")
+   insertar_usuario(nombreNUevo, correo, telefono, fecha_nacimiento,usuario,contra)
