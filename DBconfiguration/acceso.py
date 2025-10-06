@@ -57,8 +57,68 @@ def obtener_datos_usuario(username, password):
     except Exception as e:
         print("Error al consultar la base de datos:", e)
 
+def insertar_usuario(nombre, correo, telefono, fecha_nacimiento,username,password):
+    conn = conectar_db()
+    #Si no logra conectarse, no procede
+    if not conn:
+        return    
+    try:
+        cursor = conn.cursor() #Crear el cursor 
+        #Insertar usuario en la tabla
+        cursor.execute(
+        """
+        INSERT INTO ususarios(nombre,correo,telefono,fecha_nacimiento)   
+        VALUES(%s,%s,%s,%s) RETURNING id_usuario;
+        """,(nombre, correo, telefono,fecha_nacimiento))   
+       #Guarda ide del nuevo usuario
+        id_usuario = cursor.fetchone()[0]
+    
+       #Alacenamos las credenciales
+        cursor.execute(
+        """
+        INSERT INTO credenciales(id_usuario,username, password_hash)   
+        VALUES(%s,%s,%s)
+        """,(id_usuario,username,password))
+    
+       #Confrimar los cambios en la BD
+        conn.commit()
+        print("el usuario y su credencial han sido creados, correctamente")
+
+        #Si ocurre un error...
+    except Exception as e:
+        print("Error al insertar:",e)
+        #Revertir el cambio
+        conn.rollback
+    
+    finally:
+        conn.close;
+        cursor.close;
+
+def actualizar_correo(id_usuario,nuevo_correo):
+    conn = conectar_db()
+    if not conn:
+        return
+    try:
+        cursor = conn.cursor()
+        #Actualización
+        cursor.execute("UPDATE usuarios SET correo =%s WHERE id_usuario = %s"),(nuevo_correo,id_usuario)
+
+        #Ejecutar cambios
+        conn.commit()
+        print("correo actualizado correctamente")
+
+    except Exception as e:
+        print("Error al insertar:",e)
+        #Revertir el cambio
+        conn.rollback
+
+    finally:
+        cursor.close()
+        conn.close()
+
+
 if __name__ == "__main__":
-    print("Inicio de sesión en la base de datos")
+    #print("Inicio de sesión en la base de datos")
     # Solicitar credenciales al usuario
    ##### user = input("Ingrese su usuario: ")
    ##### pwd = getpass.getpass("Ingrese su contraseña: ")#No muestra la contraseña a escribir
