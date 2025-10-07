@@ -140,10 +140,55 @@ def eliminar_usuario(id_usuario):
         cursor.close()
         conn.close()
 
+def menu():
+    while True:
+        print("-------SELECCIÓN DE EJECUCIÓN----------")
+        print("1.- Consulta de usuario")
+        print("2.- Insertar nuevo usuario")
+        print("3.- Actualizar correo de usuario")
+        print("4.- Eliminar usuario")
+        print("0.- Salir")
 
+        opcion = input("\nSelecciona una opción (0 - 4)")
+        if opcion == "1":
+            print("Inicio de sesión en la base de datos")
+            #Solicitar credenciales al usuario
+            user = input("Ingrese su usuario: ")
+            pwd = getpass.getpass("Ingrese su contraseña: ")#No muestra la contraseña a escribir
+            #Consultar base de datos
+            obtener_datos_usuario(user, pwd)
+
+        elif opcion == "2":
+            print("Insertar datos")
+            nombreNuevo = input("Ingresa el nombre del nuevo usuario")
+            correo = input("Ingresa el correo")
+            telefono = input("Ingresa el telefono")
+            fecha_nacimiento = input("Ingresa la fecha de nacimiento")
+            usuario = input("Ingresa nombre de usuario nuevo")
+            contra = input("Ingresa contraseña nueva")
+            insertar_usuario(nombreNuevo, correo, telefono, fecha_nacimiento, usuario,contra)
+        
+        elif opcion == "3":
+            print("Actualizar correo")
+            id_usuario = input("Comparte el id del usuario al que deseas modificar")
+            correoNuevo = input("Comparte el correo nuevo")
+            actualizar_correo(id_usuario, correoNuevo)
+
+        elif opcion == "4":
+            print("Eliminación de Usuario")
+            id_usuario = input("Comparte el id del usuario que deseas eliminar")
+            eliminar_usuario()
+
+        elif opcion == "5":
+            print("Programa Terminado")
+            break
+        
+        else:
+            print("Prueba de nuevo")
 
 
 if __name__ == "__main__":
+      menu()
     #print("Inicio de sesión en la base de datos")
     # Solicitar credenciales al usuario
    ##### user = input("Ingrese su usuario: ")
